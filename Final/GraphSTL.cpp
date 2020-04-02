@@ -26,6 +26,7 @@ class Graph
         void addUEdge(int u,int v,int wt)
         {
             addEdge(u,v,wt);
+            addEdge(v,u,wt);
         }
         void addUEdge(int u,int v)
         {
