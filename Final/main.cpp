@@ -1,4 +1,5 @@
 #include"Module1.h"
+#include"Module2.h"
 int main()
 {
     int v,e,src,dest,wt;
@@ -24,6 +25,12 @@ int main()
     int s,r;
     cout<<"Enter the source vertex:";
     cin>>s;
+    cout<<"BFS result:"<<endl;
+    Graph T=BFS(graph,s);
+    T.printGraph();
+    cout<<endl;
+    cout<<"Enter the source vertex:";
+    cin>>s;
     cout<<"Enter the vertex where you want to reach:";
     cin>>r;
     cout<<"BFS result:"<<endl;
@@ -33,6 +40,19 @@ int main()
         cout<<"not reachable";
     cout<<endl;
     return 0;
+    cout<<"DFS result:"<<endl;
+    DFS(graph);
+    cout<<endl;
+    cout<<"Enter the source vertex:";
+    cin>>s;
+    cout<<"Enter the vertex where you want to reach:";
+    cin>>r;
+    cout<<"DFS result:"<<endl;
+    if(DFS(graph,s,r))
+        cout<<"reachable";
+    else
+        cout<<"not reachable";
+    cout<<endl;
     graph.printGraph();
     return 0;
 }

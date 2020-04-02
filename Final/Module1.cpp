@@ -36,7 +36,7 @@ Graph BFS(Graph G,int s)
             if(Vertex_Array[k->first].color==0)
             {
                 q.push(k->first);
-                if(T.directed==0)
+                if(G.directed==0)
                 T.addUEdge(t,k->first,k->second);
                 else
                 T.addEdge(t,k->first,k->second);
