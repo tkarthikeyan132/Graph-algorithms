@@ -1,6 +1,7 @@
 #include<iostream>
 #include <bits/stdc++.h> 
 using namespace std;
+int Comparator(const void* a, const void* b);
 class Edge 
 { 
 	public: 

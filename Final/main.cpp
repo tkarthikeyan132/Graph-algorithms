@@ -1,5 +1,5 @@
-#include"Module1.h"
-#include"Module2.h"
+#include"Module5.h"
+using namespace std;
 int main()
 {
     int v,e,src,dest,wt;
@@ -53,6 +53,14 @@ int main()
     else
         cout<<"not reachable";
     cout<<endl;
+    if(Test_bipartite(graph))
+        cout<<"Graph is bipartite"<<endl;
+    else
+        cout<<"Graph is not bipartite"<<endl;
+    Graph MST = MST_Kruskal(graph);
+	MST.printGraph();
+    MST = MST_youralgo(graph);
+	MST.printGraph();
     graph.printGraph();
     return 0;
 }
