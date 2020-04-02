@@ -24,7 +24,7 @@ class Graph
         void printGraph();
         Graph(int V1,int E1);
 };
-struct Vertex
+class Vertex
 {
     public:
         int id;
@@ -33,4 +33,5 @@ struct Vertex
         int pid;
         int Topological_Number;
         int In_Degree;
+        Vertex();
 };

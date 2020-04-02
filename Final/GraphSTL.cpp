@@ -1,9 +1,6 @@
 // C++ program to represent undirected and weighted graph 
 // using STL. The program basically prints adjacency list 
 // representation of graph 
-
-#include<iostream>
-#include<bits/stdc++.h>
 #include"GraphSTL.h"
 using namespace std;
 void Graph::addEdge(int u, int v,int wt)
@@ -77,6 +74,10 @@ Graph::Graph(int V1,int E1)
 	V=V1;
 	E=E1;
     directed=0;
+}
+Vertex::Vertex()
+{
+    color=0;
 }
 int Comparator(const void* a, const void* b) 
 { 

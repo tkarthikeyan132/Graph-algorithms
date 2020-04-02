@@ -1,4 +1,4 @@
-#include"GraphSTL.h"
+#include"Module1.h"
 int main()
 {
     int v,e,src,dest,wt;
@@ -18,6 +18,21 @@ int main()
         if(src>-1 && dest >-1 && src<graph.V && dest<graph.V)
         graph.addUEdge(src,dest,wt);
     }
+    cout<<"BFS result:"<<endl;
+    BFS(graph);
+    cout<<endl;
+    int s,r;
+    cout<<"Enter the source vertex:";
+    cin>>s;
+    cout<<"Enter the vertex where you want to reach:";
+    cin>>r;
+    cout<<"BFS result:"<<endl;
+    if(BFS(graph,s,r))
+        cout<<"reachable";
+    else
+        cout<<"not reachable";
+    cout<<endl;
+    return 0;
     graph.printGraph();
     return 0;
 }
