@@ -1,3 +1,4 @@
+//Finding the longest path in a DAG by negating the weights and use the same subroutine as DAG shortest path given in CLRS.
 #include<bits/stdc++.h>
 using namespace std;
 struct Vertex
