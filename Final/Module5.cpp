@@ -1,12 +1,5 @@
 #include"Module5.h"
 using namespace std;
-// A structure to represent a subset for union-find 
-class sub
-{ 
-	public: 
-	int pid;
-	int level; 
-};
 int find(sub sub_x[], int i) 
 {
 	if (sub_x[i].pid != i) 
@@ -28,17 +21,66 @@ void Union(sub sub_x[], int x1, int x2)
 		sub_x[x1root].level++; 
 	}
 }
-Graph MST_Kruskal(Graph graph) 
+int minKey(int key[],bool mstSet[],Graph temp)
 {
-	int V = graph.V; 
+  int min = INT_MAX, min_index;    //Intializing min to infinity
+  for (int v = 0; v < temp.V; v++)  
+  {
+    if (mstSet[v] == false && key[v] < min)      //min_index contains the vertex which has min-key
+    min = key[v], min_index = v;  
+  }
+  return min_index;
+}
+Graph MST_Prim(Graph G)  
+{
+  	int parent[G.V];       //MST is stored
+  	int key[G.V];         //Min Key Values to maintain Weights
+  	bool mstSet[G.V];     //To pair up what are visited
+  	Graph temp(G.V,G.V-1);
+  	for (int i = 0; i < G.V; i++)  
+  	{
+    	key[i] = INT_MAX;
+    	mstSet[i] = false;
+  	}     //All key values are set to infinite and mstSET is made false for all
+  	key[0] = 0;                   //Starting with the 1st vertex
+  	parent[0] = -1;
+  	for (int count = 0;count < G.V-1;count++)
+  	{
+    	int u = minKey(key,mstSet,temp);   //Picking the min vertex from the set of vertices not included yet
+    	mstSet[u] = true;           //Placing that value
+    	if(parent[u]>-1)
+    	temp.addUEdge(parent[u],u,key[u]);
+    	//Now its important to update the Adjacent vertices of the selected vertex,Should be careful of Already visited vertex
+    	for (int v = 0; v < G.V; v++)
+    	{
+      		int weight;
+      		for(auto it=G.adj[u].begin(); it!=G.adj[u].end();it++)
+      		{
+        	if(it->first==v)
+        	weight=it->second;
+      		}
+      		//The first condition in the "and" checks whether an edge exsits and the second whether the vertex is visited or not
+      		// And then we check the weights of the key value and graph value comparing between them
+      		if (G.checkEdge(u,v) && !mstSet[v] && weight<key[v])
+      		{
+        		parent[v] = u;
+        		key[v] = weight;
+      		}
+    	}
+  	}
+  	return temp;
+}
+Graph MST_Kruskal(Graph G) 
+{
+	int V = G.V; 
 	Edge result[V];
 	int e = 0;
 	int i = 0;
-	Edge input[graph.E];
+	Edge input[G.E];
 	int k=0;
 	for (int u = 0; u < V; u++)
     {
-    	for (auto it = graph.adj[u].begin(); it != graph.adj[u].end(); it++) 
+    	for (auto it = G.adj[u].begin(); it != G.adj[u].end(); it++) 
         {
 			if(it->first > u)
 			{
@@ -49,14 +91,14 @@ Graph MST_Kruskal(Graph graph)
 			}
         }
     }
-	qsort(input, graph.E, sizeof(input[0]), Comparator); 
+	qsort(input, G.E, sizeof(input[0]), Comparator); 
 	sub* sub_x = new sub[(V*sizeof(sub))]; 
 	for (int v = 0; v < V; ++v) 
 	{ 
 		sub_x[v].pid=v; 
 		sub_x[v].level=0; 
 	}
-	while (e<V-1 && i<graph.E) 
+	while (e<V-1 && i<G.E) 
 	{
 		Edge next_edge =input[i++]; 
 		int x = find(sub_x, next_edge.src); 
@@ -73,16 +115,16 @@ Graph MST_Kruskal(Graph graph)
 	temp.addEdge(result[i].src,result[i].dest,result[i].weight);
 	return temp;
 }
-Graph MST_youralgo(Graph graph)
+Graph MST_youralgo(Graph G)
 {
     
-    Graph temp=BFS(graph,0);
-    Edge input[graph.E];
+    Graph temp=BFS(G,0);
+    Edge input[G.E];
     int k=-1;
     bool flag;
-    for (int u = 0; u < graph.V; u++)
+    for (int u = 0; u < G.V; u++)
     {
-    	for (auto it = graph.adj[u].begin(); it != graph.adj[u].end(); it++) 
+    	for (auto it = G.adj[u].begin(); it != G.adj[u].end(); it++) 
         {
 			if(it->first > u)
 			{
@@ -93,8 +135,8 @@ Graph MST_youralgo(Graph graph)
 			}
         }
     }
-	qsort(input, graph.E, sizeof(input[0]), Comparator);
-    for(int i=0;i<graph.E;i++)
+	qsort(input, G.E, sizeof(input[0]), Comparator);
+    for(int i=0;i<G.E;i++)
     {
         temp.delEdge(input[i].src,input[i].dest);
         flag=BFS(temp,input[i].src,input[i].dest);
