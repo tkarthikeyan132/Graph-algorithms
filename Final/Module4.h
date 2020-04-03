@@ -1,4 +1,4 @@
-#include"Module1.h"
+#include"GraphSTL.h"
 using namespace std;
 bool Test_bipartite(Graph G);
 vector <int> Test_articulationpoints(Graph G);

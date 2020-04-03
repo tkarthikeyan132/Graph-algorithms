@@ -56,7 +56,6 @@ vector <int> Test_articulationpoints(Graph G)
     queue <int> q;
     Graph T(G.V,G.E);
     vector <int>ap;
-    int couAP=0;
     for(int i=0;i<G.V;i++)
     {
         T=G;
@@ -99,10 +98,8 @@ vector <int> Test_articulationpoints(Graph G)
         if(cou!=(G.V-1))
         {
             ap.push_back(i);
-            couAP++;
         }
     }
-    ap.insert(ap.begin(),couAP);
     return ap;
 }
 vector <pair<int,int>> Test_bridges(Graph G)
