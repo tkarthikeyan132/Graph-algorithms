@@ -112,7 +112,7 @@ Graph MST_Kruskal(Graph G)
 	}
 	Graph temp(V,e);
 	for (i = 0; i < e; ++i) 
-	temp.addEdge(result[i].src,result[i].dest,result[i].weight);
+	temp.addUEdge(result[i].src,result[i].dest,result[i].weight);
 	return temp;
 }
 Graph MST_youralgo(Graph G)
@@ -141,7 +141,7 @@ Graph MST_youralgo(Graph G)
         temp.delEdge(input[i].src,input[i].dest);
         flag=BFS(temp,input[i].src,input[i].dest);
         if(flag==false)
-        temp.addEdge(input[i].src,input[i].dest,input[i].weight);
+        temp.addUEdge(input[i].src,input[i].dest,input[i].weight);
     }
     return temp;
 }
