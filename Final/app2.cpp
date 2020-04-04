@@ -38,6 +38,7 @@ int main()
         switch( swh )
         {
             case 1: {
+                        Initialize_for_BFS(G,0);
                         DFS(G);
                         cout << endl;
                         break;
@@ -47,6 +48,7 @@ int main()
                         Graph T(G.V,G.V-1);
                         cout << "Enter the source point:";
                         cin >> s;
+                        Initialize_for_BFS(G,s);
                         T = DFS(G,s);
                         T.printGraph();
                         break;
@@ -57,6 +59,7 @@ int main()
                         cin >> s;
                         cout << "Enter the reach point:";
                         cin >> r;
+                        Initialize_for_BFS(G,s);
                         if(DFS(G,s,r))
                             cout <<"Reachable"<< endl;
                         else
