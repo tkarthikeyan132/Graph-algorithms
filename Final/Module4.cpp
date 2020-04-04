@@ -1,21 +1,20 @@
 #include"Module4.h"
 using namespace std;
-bool Test_bipartite(Graph G)
+bool Test_bipartite(Graph &G)
 {
-    Vertex VertexArray[20];
     queue <int> q;
     Graph T(G.V,0); // bfs tree
     int ce=0,se=0; // cross edges and slant edges
     for(int i=0;i<G.V;i++)
     {
-        VertexArray[i].color=0;
-        VertexArray[i].dist=0;
-        VertexArray[i].pid=-1;
+        G.VertexArray[i].color=0;
+        G.VertexArray[i].dist=0;
+        G.VertexArray[i].pid=-1;
     }
     q.push(0);
-    VertexArray[0].color=1;
-    VertexArray[0].pid=-1; //NULL
-    VertexArray[0].dist=0;
+    G.VertexArray[0].color=1;
+    G.VertexArray[0].pid=-1; //NULL
+    G.VertexArray[0].dist=0;
     while(!q.empty())
     {
         int t=q.front();
@@ -23,12 +22,12 @@ bool Test_bipartite(Graph G)
         for(auto k=G.adj[t].begin();k<G.adj[t].end();k++)
         {
             int x=k->first;
-            if(VertexArray[x].color==0)
+            if(G.VertexArray[x].color==0)
             {
                 q.push(x);
-                VertexArray[x].pid=t;
-                VertexArray[x].dist=VertexArray[t].dist+1;
-                VertexArray[x].color=1;
+                G.VertexArray[x].pid=t;
+                G.VertexArray[x].dist=VertexArray[t].dist+1;
+                G.VertexArray[x].color=1;
                 T.addUEdge(t,k->first);
                 T.E+=2;
             }
@@ -39,7 +38,7 @@ bool Test_bipartite(Graph G)
         {
             if(G.checkEdge(x,y)==1&&T.checkEdge(x,y)==0)
             {
-                if(VertexArray[x].dist==VertexArray[y].dist)
+                if(G.VertexArray[x].dist==G.VertexArray[y].dist)
                     ce++;
                 else
                     se++;
@@ -50,9 +49,8 @@ bool Test_bipartite(Graph G)
     else
         return false;
 }
-vector <int> Test_articulationpoints(Graph G)
+vector <int> Test_articulationpoints(Graph &G)
 {
-    Vertex VertexArray[20];
     queue <int> q;
     Graph T(G.V,G.E);
     vector <int>ap;
@@ -72,27 +70,27 @@ vector <int> Test_articulationpoints(Graph G)
             }
         }
         for(int a=0;a<20;a++)
-            VertexArray[a].color=0;
+            G.VertexArray[a].color=0;
         int r=((i+1)%(G.V));
         q.push(r); // bfs starts
-        VertexArray[r].color=1;
+        G.VertexArray[r].color=1;
         while(!q.empty())
         {
             int t=q.front();
             q.pop();
             for(auto k=T.adj[t].begin();k<T.adj[t].end();k++)
             {
-                if(VertexArray[k->first].color==0)
+                if(G.VertexArray[k->first].color==0)
                 {
                     q.push(k->first);
-                    VertexArray[k->first].color=1;
+                    G.VertexArray[k->first].color=1;
                 }
             }
         } // bfs ends
         int cou=0;
         for(int u=0;u<G.V;u++)
         {
-            if(VertexArray[u].color==1)
+            if(G.VertexArray[u].color==1)
                 cou++;
         }
         if(cou!=(G.V-1))
@@ -102,9 +100,8 @@ vector <int> Test_articulationpoints(Graph G)
     }
     return ap;
 }
-vector <pair<int,int>> Test_bridges(Graph G)
+vector <pair<int,int>> Test_bridges(Graph &G)
 {
-    Vertex VertexArray[20];
     queue <int> q;
     Graph T(G.V,G.E); // temporary graph
     int couB=0;
@@ -126,26 +123,26 @@ vector <pair<int,int>> Test_bridges(Graph G)
                     T.adj[k].erase(y);
             }
             for(int a=0;a<20;a++)
-                VertexArray[a].color=0;
+                G.VertexArray[a].color=0;
             q.push(0); // bfs starts
-            VertexArray[0].color=1;
+            G.VertexArray[0].color=1;
             while(!q.empty())
             {
                 int t=q.front();
                 q.pop();
                 for(auto k=T.adj[t].begin();k<T.adj[t].end();k++)
                 {
-                    if(VertexArray[k->first].color==0)
+                    if(G.VertexArray[k->first].color==0)
                     {
                         q.push(k->first);
-                        VertexArray[k->first].color=1;
+                        G.VertexArray[k->first].color=1;
                     }
                 }
             } // bfs ends
             int cou=0;
             for(int u=0;u<G.V;u++)
             {
-                if(VertexArray[u].color==1)
+                if(G.VertexArray[u].color==1)
                     cou++;
             }
             if(cou!=G.V)
