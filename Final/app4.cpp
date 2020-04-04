@@ -51,7 +51,7 @@ int main()
                         cout << rap.size() << endl;
                         cout <<"Articulation points are:";
                         for(int k=0;k<rap.size();k++)
-                            cout <<k<< " ";
+                            cout <<ap[k]<< " ";
                         cout << endl;
                         break;
                     }
