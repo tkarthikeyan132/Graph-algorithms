@@ -1,6 +1,144 @@
 #include"Module3.h"
 
 int Zero_In_degree = 0;   //a utility global variable for DAG.
+
+vector<vector<int>> BFS_SPATH(Graph G, Vertex s, int flag)
+{
+    int u;
+    queue <int> Q;
+    Q.push(s.id);
+
+    if(flag == 0)
+    {
+        vector <vector <int>> spath (G.V); 
+        Vertex Array_of_vectors[G.V];
+        for(int i = 0; i < G.V; i++)
+        {
+            Array_of_vectors[i].id = i;
+            if(i != s.id)
+            {
+                Array_of_vectors[i].dist = INFINITY;
+                Array_of_vectors[i].pid = -2;
+                Array_of_vectors[i].color = 0; //white
+            }
+            else
+            {
+                Array_of_vectors[i].color = 1;  //gray
+                Array_of_vectors[i].dist = 0;
+                Array_of_vectors[i].pid = G.V;  //sort of NIL an indication of having no parent.
+            }
+        }
+    
+        while(!Q.empty())
+        {
+            u = Q.front();
+            Q.pop();
+            for(auto it = G.BFS_SPATH_adj[u].begin(); it < G.BFS_SPATH_adj[u].end(); it++)
+            {  
+                if(Array_of_vectors[*it].color == 0)
+                {
+                    Array_of_vectors[*it].color = 1;
+                    Array_of_vectors[*it].dist = Array_of_vectors[u].dist + 1;
+                    Array_of_vectors[*it].pid = u; 
+                    Q.push(Array_of_vectors[*it].id);
+                }
+            }
+            Array_of_vectors[u].color = 2;
+        }
+        //below part is just to make a ordered collection of parents, done for every node. 
+        u = 0;
+        spath[s.id].push_back(-2);
+        while(u != G.V)
+        {
+            int i = u;
+            while(Array_of_vectors[i].pid != G.V)
+            {
+                if(Array_of_vectors[u].pid != -2)
+                {
+                    spath[u].push_back(Array_of_vectors[i].pid);
+                    i = Array_of_vectors[i].pid;
+                }
+                else
+                {
+                    spath[u].push_back(INFINITY);
+                    break;
+                }
+            }
+            spath[u].push_back(-1); //to pad -1 for indication of end
+            u++;
+        }
+        return spath;
+    }
+    else
+    {
+        vector <vector <int>> spath (G.V_Prime); 
+        Vertex Array_of_vectors[G.V_Prime];
+        for(int i = 0; i < G.V_Prime; i++)
+        {
+            Array_of_vectors[i].id = i;
+            if(i != s.id)
+            {
+                Array_of_vectors[i].dist = INFINITY;
+                Array_of_vectors[i].pid = -2;
+                Array_of_vectors[i].color = 0; //white
+            }
+            else
+            {
+                Array_of_vectors[i].color = 1;  //gray
+                Array_of_vectors[i].dist = 0;
+                Array_of_vectors[i].pid = G.V_Prime;  //sort of NIL an indication of having no parent.
+            }
+        }
+    
+        queue <int> Q;
+        Q.push(s.id);
+        while(!Q.empty())
+        {
+            u = Q.front();
+            Q.pop();
+            for(auto it = G.BFS_SPATH_adj[u].begin(); it < G.BFS_SPATH_adj[u].end(); it++)
+            {  
+                if(Array_of_vectors[*it].color == 0)
+                {
+                    Array_of_vectors[*it].color = 1; 
+                    Array_of_vectors[*it].dist = Array_of_vectors[u].dist + 1;
+                    Array_of_vectors[*it].pid = u; 
+                    Q.push(Array_of_vectors[*it].id);
+                }
+            }
+            Array_of_vectors[u].color = 2;
+        }
+
+        //below part is just to make a ordered collection of parents, done for every node. 
+        u = 0;
+        spath[s.id].push_back(-2); //spath of the source Vertex itself is kept as negative.
+        while(u != G.V_Prime)
+        {
+            if(u < G.V)   //ensuring we don't push dummy_vertices.
+            {
+                int i = u;
+                while(Array_of_vectors[i].pid != G.V_Prime)
+                {
+                    if(Array_of_vectors[u].pid != -2) //check if the Vertex u is traversed using BFS or not.
+                    {
+                        if(Array_of_vectors[i].pid < G.V)
+                            spath[u].push_back(Array_of_vectors[i].pid);
+                        i = Array_of_vectors[i].pid;
+                    } 
+                    else //if it is not traversed, put infinity in its spath
+                    {
+                        spath[u].push_back(INFINITY);
+                        break;
+                    }
+                }
+                spath[u].push_back(-1); //to pad -1 for indication of end
+            }
+            u++;
+        }
+        return spath;
+    }
+}
+
 vector<int> LPATH(Graph &G, int flag)
 {
     if (flag == 0) //for an unweighted tree
