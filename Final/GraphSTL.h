@@ -23,9 +23,12 @@ class Graph
 	public:
         int V;
         int E;
+	int  V_Prime; //for SPATH Algorithms
+        int dummy_vertex; //for SPATH Algorithms
         int directed;
-        vector<pair<int,int>>adj[20]; //makes an array of vectors
-        Vertex Vertex_Array[20];
+        vector<pair<int,int>>adj[200]; //makes an array of vectors(adjancency list)
+	vector<int> BFS_SPATH_adj[200];  //Special adjacency list for SPATH algorithms. 
+        Vertex Vertex_Array[200];
         //Adding an edge between vertex u and v.
         void addEdge(int u, int v,int wt);
         void addUEdge(int u,int v,int wt);
@@ -33,6 +36,8 @@ class Graph
         void addEdge(int u,int v);
         bool checkEdge(int u,int v);
         int delEdge(int u,int v);
+	void BFS_SPATH_addEdge(int u, int v, int wt, int flag);
+        void BFS_SPATH_printGraph(int flag); 
         // Print adjacency list representaion ot graph 
         void printGraph();
         Graph(int V1,int E1);
