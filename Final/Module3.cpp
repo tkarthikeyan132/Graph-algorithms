@@ -305,4 +305,13 @@ vector<int> DAG_LONGEST_PATH(Graph &G, Vertex s, vector<int> Topological_vector)
     LPATH[j] = i;
     return LPATH;
 }
-
+Graph MAX_Weight_MST(Graph G)
+{
+    for(int u=0;u<G.V;u++)
+    {
+        for(auto it=G.adj[u].begin();it!=G.adj[u].end();it++)
+        it->second=(-1)*it->second;
+    }
+    Graph temp=MST_Prim(G);
+    return temp;
+}
