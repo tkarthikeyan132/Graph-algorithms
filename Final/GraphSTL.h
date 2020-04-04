@@ -41,5 +41,6 @@ class Graph
         // Print adjacency list representaion ot graph 
         void printGraph();
         Graph(int V1,int E1);
+        Graph();
 };
 void Initialize_for_BFS(Graph &G, int s);

@@ -7,14 +7,14 @@ bool Test_bipartite(Graph &G)
     int ce=0,se=0; // cross edges and slant edges
     for(int i=0;i<G.V;i++)
     {
-        G.VertexArray[i].color=0;
-        G.VertexArray[i].dist=0;
-        G.VertexArray[i].pid=-1;
+        G.Vertex_Array[i].color=0;
+        G.Vertex_Array[i].dist=0;
+        G.Vertex_Array[i].pid=-1;
     }
     q.push(0);
-    G.VertexArray[0].color=1;
-    G.VertexArray[0].pid=-1; //NULL
-    G.VertexArray[0].dist=0;
+    G.Vertex_Array[0].color=1;
+    G.Vertex_Array[0].pid=-1; //NULL
+    G.Vertex_Array[0].dist=0;
     while(!q.empty())
     {
         int t=q.front();
@@ -22,12 +22,12 @@ bool Test_bipartite(Graph &G)
         for(auto k=G.adj[t].begin();k<G.adj[t].end();k++)
         {
             int x=k->first;
-            if(G.VertexArray[x].color==0)
+            if(G.Vertex_Array[x].color==0)
             {
                 q.push(x);
-                G.VertexArray[x].pid=t;
-                G.VertexArray[x].dist=VertexArray[t].dist+1;
-                G.VertexArray[x].color=1;
+                G.Vertex_Array[x].pid=t;
+                G.Vertex_Array[x].dist=G.Vertex_Array[t].dist+1;
+                G.Vertex_Array[x].color=1;
                 T.addUEdge(t,k->first);
                 T.E+=2;
             }
@@ -38,7 +38,7 @@ bool Test_bipartite(Graph &G)
         {
             if(G.checkEdge(x,y)==1&&T.checkEdge(x,y)==0)
             {
-                if(G.VertexArray[x].dist==G.VertexArray[y].dist)
+                if(G.Vertex_Array[x].dist==G.Vertex_Array[y].dist)
                     ce++;
                 else
                     se++;
@@ -70,27 +70,27 @@ vector <int> Test_articulationpoints(Graph &G)
             }
         }
         for(int a=0;a<20;a++)
-            G.VertexArray[a].color=0;
+            G.Vertex_Array[a].color=0;
         int r=((i+1)%(G.V));
         q.push(r); // bfs starts
-        G.VertexArray[r].color=1;
+        G.Vertex_Array[r].color=1;
         while(!q.empty())
         {
             int t=q.front();
             q.pop();
             for(auto k=T.adj[t].begin();k<T.adj[t].end();k++)
             {
-                if(G.VertexArray[k->first].color==0)
+                if(G.Vertex_Array[k->first].color==0)
                 {
                     q.push(k->first);
-                    G.VertexArray[k->first].color=1;
+                    G.Vertex_Array[k->first].color=1;
                 }
             }
         } // bfs ends
         int cou=0;
         for(int u=0;u<G.V;u++)
         {
-            if(G.VertexArray[u].color==1)
+            if(G.Vertex_Array[u].color==1)
                 cou++;
         }
         if(cou!=(G.V-1))
@@ -123,26 +123,26 @@ vector <pair<int,int>> Test_bridges(Graph &G)
                     T.adj[k].erase(y);
             }
             for(int a=0;a<20;a++)
-                G.VertexArray[a].color=0;
+                G.Vertex_Array[a].color=0;
             q.push(0); // bfs starts
-            G.VertexArray[0].color=1;
+            G.Vertex_Array[0].color=1;
             while(!q.empty())
             {
                 int t=q.front();
                 q.pop();
                 for(auto k=T.adj[t].begin();k<T.adj[t].end();k++)
                 {
-                    if(G.VertexArray[k->first].color==0)
+                    if(G.Vertex_Array[k->first].color==0)
                     {
                         q.push(k->first);
-                        G.VertexArray[k->first].color=1;
+                        G.Vertex_Array[k->first].color=1;
                     }
                 }
             } // bfs ends
             int cou=0;
             for(int u=0;u<G.V;u++)
             {
-                if(G.VertexArray[u].color==1)
+                if(G.Vertex_Array[u].color==1)
                     cou++;
             }
             if(cou!=G.V)

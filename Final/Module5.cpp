@@ -44,7 +44,7 @@ Graph MST_Prim(Graph G)
   	}     //All key values are set to infinite and mstSET is made false for all
   	key[0] = 0;                   //Starting with the 1st vertex
   	parent[0] = -1;
-  	for (int count = 0;count < G.V-1;count++)
+  	for (int count = 0;count < G.V;count++)
   	{
     	int u = minKey(key,mstSet,temp);   //Picking the min vertex from the set of vertices not included yet
     	mstSet[u] = true;           //Placing that value
