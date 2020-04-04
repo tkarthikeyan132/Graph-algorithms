@@ -1,6 +1,6 @@
 #include"Module1.h"
 using namespace std;
-void BFS(Graph G)
+void BFS(Graph &G)
 {
     Vertex Vertex_Array[20]; // To store information about the vertex
     queue <int> q;
@@ -21,7 +21,7 @@ void BFS(Graph G)
         }
     }
 }
-Graph BFS(Graph G, int s)
+Graph BFS(Graph &G, int s)
 {
     Graph T(G.V,G.V-1);
     queue <int> q;
@@ -52,7 +52,7 @@ Graph BFS(Graph G, int s)
     }
     return T;
 }   
-bool BFS(Graph G,int s,int r)
+bool BFS(Graph &G,int s,int r)
 {
     Vertex Vertex_Array[20]; // To store information about the vertex
     queue <int> q;
