@@ -18,7 +18,7 @@ vector<int> LPATH(Graph G,int flag=0)
     for(int i = 0; i < Zero_In_degree; i++)
     {
         LPATH_Vector[i].resize(G.V + 1);
-        LPATH_Vector[i] = DAG_LONGEST_PATH(G, Vertex_Array[Topological_Vector[i]], Topological_Vector);
+        LPATH_Vector[i] = DAG_LONGEST_PATH(G, G.Vertex_Array[Topological_Vector[i]], Topological_Vector);
         if(LPATH_Vector[i][0] < MAX)
         {
             MAX = LPATH_Vector[i][0];
@@ -46,7 +46,7 @@ vector<int> topological_ordering(Graph G)
     int counter = 0;
     for(int i = 0; i < G.V; i++)
     {
-        if(Vertex_Array[i].In_Degree == 0)
+        if(G.Vertex_Array[i].In_Degree == 0)
             q.push(i);
     }
     Zero_In_degree = q.size();    //used to mark where the cluster of zero in degree vertices ends in the Topological_Vector.
@@ -161,18 +161,4 @@ vector<int> LPATH(Graph T,int flag=1) //an unweighted tree.
     Final_vector[j] = i;
     Final_vector.resize(j + 1);
     return Final_vector ;
-}
-
-void Initialize_for_BFS(Graph G, int s)
-{
-    for(int i = 0; i < G.V; i++)
-    {
-        Vertex_Array[i].id = i;
-        if(i != s)
-        {
-            Vertex_Array[i].color = 0;
-            Vertex_Array[i].dist = INFINITY;
-            Vertex_Array[i].pid = -2;
-        }
-    }
 }

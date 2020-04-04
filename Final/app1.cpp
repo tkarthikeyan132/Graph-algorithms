@@ -1,4 +1,5 @@
 #include"Module1.h"
+using namespace std;
 int main()
 {
     int N,M; // N is no of vertices and M is no of edges

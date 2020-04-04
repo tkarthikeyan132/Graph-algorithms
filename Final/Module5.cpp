@@ -135,7 +135,6 @@ Graph MST_youralgo(Graph G)
 			}
         }
     }
-	cout<<"Yo";
 	qsort(input, G.E, sizeof(input[0]), Comparator);
     for(int i=0;i<G.E;i++)
     {
