@@ -85,3 +85,16 @@ int Comparator(const void* a, const void* b)
 	Edge* b1 = (Edge*)b; 
 	return a1->weight > b1->weight; 
 }
+void Initialize_for_BFS(Graph &G, int s)
+{
+    for(int i = 0; i < G.V; i++)
+    {
+        G.Vertex_Array[i].id = i;
+        if(i != s)
+        {
+            G.Vertex_Array[i].color = 0;
+            G.Vertex_Array[i].dist = INFINITY;
+            G.Vertex_Array[i].pid = -2;
+        }
+    }
+}
