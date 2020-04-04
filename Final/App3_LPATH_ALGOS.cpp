@@ -53,6 +53,7 @@ int main()
         MST = MAX_Weight_MST(G);
         cout << "The max weight MST is:" << endl;
         MST.printGraph();
+        cout << endl;
     }
     return 0;
 }
