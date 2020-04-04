@@ -313,5 +313,10 @@ Graph MAX_Weight_MST(Graph G)
         it->second=(-1)*it->second;
     }
     Graph temp=MST_Prim(G);
+    for(int u=0;u<temp.V;u++)
+    {
+        for(auto it=temp.adj[u].begin();it!=temp.adj[u].end();it++)
+        it->second=(-1)*it->second;
+    }
     return temp;
 }
