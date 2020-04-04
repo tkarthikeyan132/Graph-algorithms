@@ -21,22 +21,27 @@ void BFS(Graph G)
         }
     }
 }
-Graph BFS(Graph G,int s)
+Graph BFS(Graph G, int s)
 {
-    Vertex Vertex_Array[20]; // To store information about the vertex
+    Graph T(G.V,G.V-1);
     queue <int> q;
     q.push(s);
-    Graph T(G.V,G.V-1);
     Vertex_Array[s].color=1;
+    Vertex_Array[s].pid=-1; //NULL
+    Vertex_Array[s].dist=0;
     while(!q.empty())
     {
         int t=q.front();
         q.pop();
-        for(auto k=G.adj[t].begin();k<G.adj[t].end();k++)
+        cout<<t<<" ";
+        for(auto k=G.adj[t].begin();k!=G.adj[t].end();k++)
         {
             if(Vertex_Array[k->first].color==0)
             {
                 q.push(k->first);
+                Vertex_Array[k->first].pid=t;
+                Vertex_Array[k->first].dist=Vertex_Array[t].dist+1;
+                Vertex_Array[k->first].color=1;
                 if(G.directed==0)
                 T.addUEdge(t,k->first,k->second);
                 else
