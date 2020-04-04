@@ -2,7 +2,6 @@
 using namespace std;
 void BFS(Graph &G)
 {
-    Vertex Vertex_Array[20]; // To store information about the vertex
     queue <int> q;
     q.push(0);
     Vertex_Array[0].color=1;
@@ -54,7 +53,6 @@ Graph BFS(Graph &G, int s)
 }   
 bool BFS(Graph &G,int s,int r)
 {
-    Vertex Vertex_Array[20]; // To store information about the vertex
     queue <int> q;
     q.push(s);
     Vertex_Array[s].color=1;
