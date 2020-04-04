@@ -2,6 +2,7 @@
 #include <bits/stdc++.h> 
 using namespace std;
 int Comparator(const void* a, const void* b);
+void Initialize_for_BFS(Graph &G, int s);
 class Edge 
 { 
 	public: 
