@@ -38,6 +38,7 @@ int Graph::delEdge(int u,int v)
         {
             adj[u].erase(it);
             i++;
+            break;
         }
     }
     if(directed==0)
@@ -48,6 +49,7 @@ int Graph::delEdge(int u,int v)
             {
                 adj[v].erase(it);
                 i++;
+                break;
             }
         }
     }

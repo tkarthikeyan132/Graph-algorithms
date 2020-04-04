@@ -118,8 +118,8 @@ Graph MST_Kruskal(Graph G)
 Graph MST_youralgo(Graph G)
 {
     
-    Graph temp=BFS(G,0);
-    Edge input[G.E];
+    Graph temp=G;
+    Edge input[20];
     int k=-1;
     bool flag;
     for (int u = 0; u < G.V; u++)
@@ -131,17 +131,18 @@ Graph MST_youralgo(Graph G)
                 k++;
 				input[k].src=u;
 				input[k].dest=it->first;
-				input[k].weight=it->second;
+				input[k].weight=(-1)*it->second;
 			}
         }
     }
 	qsort(input, G.E, sizeof(input[0]), Comparator);
     for(int i=0;i<G.E;i++)
     {
+		Initialize_for_BFS(temp,input[i].src);
         temp.delEdge(input[i].src,input[i].dest);
         flag=BFS(temp,input[i].src,input[i].dest);
-        if(flag==false)
-        temp.addUEdge(input[i].src,input[i].dest,input[i].weight);
+        if(!flag)
+        temp.addUEdge(input[i].src,input[i].dest,(-1)*input[i].weight);
     }
     return temp;
 }
