@@ -5,7 +5,7 @@
 int main()
 {
     Graph G;
-    int x, y, wt, flag, tick;
+    int x, y, wt,weight, flag, tick;
     vector<int> lpath(G.V + 1);
     cout << "Enter the number of vertices:";
     cin >> G.V;
@@ -18,24 +18,48 @@ int main()
     }
     cout << "\nEnter the number of edges:";
     cin >> G.E;
-    cout << "Enter 1 if the tree is DAG, and 0 if a normal tree: ";
+    cout << "Enter 1 if the graph is weighted, and 0 if a unweighted: ";
+    cin>>weight;
+    cout << "Enter 1 if the graph is directed, and 0 if a undirected: ";
     cin >> flag;
     for (int l = 0; l < G.E; l++)
     {
         if (flag == 0)
         {
-            cin >> x >> y;
-            G.addUEdge(x, y); //undirected unweighted edge
+            if(weight==0)
+            {
+                cin >> x >> y;
+                G.addUEdge(x, y); //undirected unweighted edge
+            }
+            else
+            {
+                cin>>x>>y>> wt;
+                G.addUEdge(x, y,wt); //undirected weighted edge
+            }
         }
         else
         {
-            cin >> x >> y >> wt;
-            G.addEdge(x, y, wt); //directed weighted edge
-            G.Vertex_Array[y].In_Degree++;
+            if(weight==0)
+            {
+                cin >> x >> y;
+                G.addEdge(x, y); //directed unweighted edge
+                G.Vertex_Array[y].In_Degree++;
+            }
+            else
+            {
+                cin >> x >> y >> wt;
+                G.addEdge(x, y, wt); //directed weighted edge
+                G.Vertex_Array[y].In_Degree++;
+            }
         }
     }
-    cout << "Enter 0 for finding lpath and 1 for finding MST" << endl;
-    cin >> tick;
+    if(flag==0)
+    {
+        cout << "Enter 0 for finding lpath and 1 for finding Max_MST" << endl;
+        cin >> tick;
+    }
+    else 
+    tick=0;
     if(tick == 0)
     {
         lpath = LPATH(G, flag);

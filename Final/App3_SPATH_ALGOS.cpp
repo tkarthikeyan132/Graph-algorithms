@@ -4,7 +4,7 @@ int main()
 { 
 	Graph G;
     Vertex s;
-    int x, y, wt, flag;
+    int x, y, wt=1, flag;
     printf("Enter the no of nodes in the Graph: ");
     cin >> G.V;
     G.V_Prime = G.V;
