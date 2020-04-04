@@ -84,19 +84,6 @@ vector<int> LPATH(Graph &G, int flag)
     }
 }
 
-void Initialize_for_BFS(Graph &G, int s)
-{
-    for (int i = 0; i < G.V; i++)
-    {
-        G.Vertex_Array[i].id = i;
-        if (i != s)
-        {
-            G.Vertex_Array[i].color = 0;
-            G.Vertex_Array[i].dist = INFINITY;
-            G.Vertex_Array[i].pid = -2;
-        }
-    }
-}
 
 vector<int> topological_ordering(Graph &G)
 {
