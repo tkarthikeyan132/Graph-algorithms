@@ -5,7 +5,7 @@
 int main()
 {
     Graph G;
-    int x, y, wt, flag;
+    int x, y, wt, flag, tick;
     vector<int> lpath(G.V + 1);
     cout << "Enter the number of vertices:";
     cin >> G.V;
@@ -34,10 +34,25 @@ int main()
             G.Vertex_Array[y].In_Degree++;
         }
     }
-    lpath = LPATH(G, flag);
-    cout << "The length of the lpath is :" << lpath[0] << endl;
-    for (auto it = lpath.begin() + 1; it != lpath.end(); it++)
-        cout << "(" << *it << ")<--";
-    cout << endl;
+    cout << "Enter 0 for finding lpath and 1 for finding MST" << endl;
+    cin >> tick;
+    if(tick == 0)
+    {
+        lpath = LPATH(G, flag);
+        cout << "The length of the lpath is :" << lpath[0] << endl;
+        cout << "The lpath is: " << endl;
+        for (auto it = lpath.begin() + 1; it != lpath.end(); it++)
+            cout << "(" << *it << ")<--";
+        cout << endl;
+    }
+    else
+    {
+        Graph MST;
+        MST.V = G.V;
+        MST.E = G.E;
+        MST = MAX_Weight_MST(G);
+        cout << "The max weight MST is:" << endl;
+        MST.printGraph();
+    }
     return 0;
 }
