@@ -20,6 +20,71 @@ void Graph::addEdge(int u,int v)
 {
     addEdge(u,v,1);
 }
+void Graph::BFS_SPATH_addEdge(int u, int v, int wt, int flag) 
+{ 
+    if(flag == 0) //unweighted graph
+    {
+        BFS_SPATH_adj[u].push_back(v); 
+    }
+    else   //weighted graph
+    {
+        V_Prime++;
+        BFS_SPATH_adj[u].push_back(dummy_vertex);  //creates one dummy_vertex and connects it to u
+        for(int i = 1; i <= wt - 2; i++)
+        {
+            V_Prime++;  //accomodoting space for a new born dummy_vertex.
+            BFS_SPATH_adj[dummy_vertex].push_back(dummy_vertex + 1);//creates wt - 1 dummy_vertices and makes wt - 2 edges among consecutive edges.
+            dummy_vertex++;
+        }
+        BFS_SPATH_adj[dummy_vertex].push_back(v); //creates an edge from dummy to v;
+        dummy_vertex++;
+    }
+} 
+
+void Graph::BFS_SPATH_printGraph(int flag) 
+{ 
+    if(flag == 0)
+    {
+        for (int u = 0; u < V; u++) 
+        { 
+            cout << "Node " << u << " connects to nodes\t"; 
+            for (auto it = BFS_SPATH_adj[u].begin(); it != BFS_SPATH_adj[u].end(); it++) 
+                cout << *it << ", "; 
+            cout << endl; 
+        } 
+    }
+    else
+    {
+        for (int u = 0; u < V; u++) 
+        { 
+            cout << "Node " << u << " connects to \n"; 
+            for ( auto it =  BFS_SPATH_adj[u].begin() ; it != BFS_SPATH_adj[u].end() ; it++) 
+            {
+                int twt = 0;
+                int prev = u;
+                int curr = *it;  //curr is a child of u(prev)
+                twt++;  //tempweight
+                while(curr >= V)
+                {
+                    if(BFS_SPATH_adj[curr][0] != prev)  // BFS_SPATH_adj[v][0] is a child of v;
+                    {
+                        prev = curr;
+                        curr = BFS_SPATH_adj[curr][0];
+                    }
+                    else
+                    {
+                        prev = curr;
+                        curr = BFS_SPATH_adj[curr][1];
+                    }
+                    twt++;
+                }
+                cout << "\tNode " << curr << " with edge weight ="
+                    << twt  << endl << endl;  
+            } 
+        }
+    }
+}
+
 bool Graph::checkEdge(int u,int v)
 {
     for(auto it=adj[u].begin();it!=adj[u].end();it++)
@@ -76,6 +141,10 @@ Graph::Graph(int V1,int E1)
 	V=V1;
 	E=E1;
     directed=0;
+}
+Graph::Graph()
+{
+    directed = 0;
 }
 Vertex::Vertex()
 {
